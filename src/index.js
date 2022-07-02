@@ -1,4 +1,8 @@
+// imports
+import router from './routes/index.js';
+
 // Lambda Handler
 export const handler = async (event) => {
-  // TODO : switch case on HTTP method
+  // TODO : use router
+  await router(event);
 };
