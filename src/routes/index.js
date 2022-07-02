@@ -1,15 +1,15 @@
 // load config
-import { constants } from '../config';
+import constants from '../config/index.js';
+
 
 // Route HTTP requests
-export const router = async (event) => {
-  const routeKey = event.routeKey; // request routeKey
+export default router = async (event) => {
+  const path = event.routeKey; // path
 
-  switch (routeKey) {
+  switch (path) {
     case `GET ${constants.ROUTE_KEY_BASE}/{serialNumber}`:
-      // TODO : implement endpoint handler
+      // TODO : implement handler
       break;
-
     default:
       return {
         statusCode: 404,
