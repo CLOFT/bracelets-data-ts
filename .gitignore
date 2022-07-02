@@ -150,3 +150,6 @@ event.json
 
 # Ignore prettier config files
 .prettierrc
+
+# Ignore MacBook files
+.DS_STORE
