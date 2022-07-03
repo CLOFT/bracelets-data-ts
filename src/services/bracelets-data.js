@@ -14,24 +14,25 @@ const client = new TimestreamQueryClient({
   },
 });
 
-const getAllData = async () => {
+const getLastBySerialNumber = async (serialNumber) => {
   let res = null;
   try {
     const input = {
-      QueryString: `SELECT * FROM "${constants.DATABASE_NAME}"."${constants.TABLE_NAME}" ORDER BY time DESC`,
+      QueryString:
+        `SELECT * FROM "${constants.DATABASE_NAME}"."${constants.TABLE_NAME}" ` +
+        `WHERE bracelet_id = '${serialNumber}' ` +
+        `ORDER BY time DESC ` +
+        `LIMIT 1`,
     };
     const command = new QueryCommand(input);
     res = await client.send(command);
+    console.log('Row ', res);
+    console.log('Data ', res.Rows[0].Data);
   } catch (error) {
     console.log(error);
   } finally {
     return res;
   }
-};
-
-const getLastBySerialNumber = async (serialNumber) => {
-  const data = await getAllData();
-  console.log(data.Rows[0].Data);
   // TODO : LIMIT 1 result for given serial number
 };
 
