@@ -5,9 +5,11 @@ import constants from '../config/index.js';
 import braceletsDataService from '../services/bracelets-data.js';
 
 // Route HTTP requests
-const router = async (event) => {
+const router = async (event, services) => {
   const path = event.routeKey; // path
-  let result;
+  let result = null; // return result
+
+  // Switch by path
   switch (path) {
     case `GET ${constants.ROUTE_KEY_BASE}/{serialNumber}`:
       result = await braceletsDataService.getLastBySerialNumber(
@@ -20,6 +22,7 @@ const router = async (event) => {
         message: 'Not found',
       };
   }
+  return result;
 };
 
 export default router;

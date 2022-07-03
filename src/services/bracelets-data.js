@@ -1,6 +1,9 @@
 // load env
 import constants from '../config/index.js';
 
+// helpers
+import { removeNewLines, parseRow } from '../bin/index.js';
+
 import {
   TimestreamQueryClient,
   QueryCommand,
@@ -18,16 +21,15 @@ const getLastBySerialNumber = async (serialNumber) => {
   let res = null;
   try {
     const input = {
-      QueryString:
-        `SELECT * FROM "${constants.DATABASE_NAME}"."${constants.TABLE_NAME}" ` +
-        `WHERE bracelet_id = '${serialNumber}' ` +
-        `ORDER BY time DESC ` +
-        `LIMIT 1`,
+      QueryString: removeNewLines(`
+        SELECT * FROM "${constants.DATABASE_NAME}"."${constants.TABLE_NAME}"
+        WHERE bracelet_id = '${serialNumber}'
+        ORDER BY time DESC
+        LIMIT 1`),
     };
     const command = new QueryCommand(input);
-    res = await client.send(command);
-    console.log('Row ', res);
-    console.log('Data ', res.Rows[0].Data);
+    let queryResult = await client.send(command);
+    res = parseRow(queryResult.ColumnInfo, queryResult.Rows[0].Data);
   } catch (error) {
     console.log(error);
   } finally {
