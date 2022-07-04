@@ -7,6 +7,7 @@ import braceletsDataService from '../services/bracelets-data.js';
 // Route HTTP requests
 const router = async (event, services) => {
   const path = event.routeKey; // path
+  const method = event.queryStringParameters.method; // requested method to call
   let result = null; // return result
 
   // Switch by path
@@ -16,6 +17,13 @@ const router = async (event, services) => {
         event.pathParameters.serialNumber
       );
       break;
+    case `GET ${constants.ROUTE_KEY_BASE}`:
+      if (method != undefined) {
+        if (method == 'lastDay') {
+          result = await braceletsDataService.getLastDayData();
+        }
+      }
+
     default:
       return {
         statusCode: 404,

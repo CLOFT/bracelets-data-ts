@@ -35,11 +35,30 @@ const getLastBySerialNumber = async (serialNumber) => {
   } finally {
     return res;
   }
-  // TODO : LIMIT 1 result for given serial number
+};
+
+const getLastDayData = async () => {
+  let res = null;
+  try {
+    const input = {
+      QueryString: removeNewLines(`
+        SELECT * FROM "${constants.DATABASE_NAME}"."${constants.TABLE_NAME}"
+        WHERE time between ago(1d) and now()`),
+    };
+    const command = new QueryCommand(input);
+    let queryResult = await client.send(command);
+    // TODO : look queryResult payload format
+    // res = parseRow(queryResult.ColumnInfo, queryResult.Rows[0].Data);
+  } catch (error) {
+    console.log(error);
+  } finally {
+    return res;
+  }
 };
 
 const braceletsDataService = {
   getLastBySerialNumber,
+  getLastDayData
 };
 
 export default braceletsDataService;
