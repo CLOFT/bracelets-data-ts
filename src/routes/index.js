@@ -20,6 +20,7 @@ const router = async (event, services) => {
     case `GET ${constants.ROUTE_KEY_BASE}`:
       if (method != undefined) {
         if (method == 'lastDay') {
+          console.log('Info: Retrieving last day data ...');
           result = await braceletsDataService.getLastDayData();
         }
       }

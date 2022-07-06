@@ -58,7 +58,7 @@ const getLastDayData = async () => {
 
 const braceletsDataService = {
   getLastBySerialNumber,
-  getLastDayData
+  getLastDayData,
 };
 
 export default braceletsDataService;
