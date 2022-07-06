@@ -2,7 +2,7 @@
 import constants from '../config/index.js';
 
 // helpers
-import { removeNewLines, parseRow } from '../bin/index.js';
+import { removeNewLines, parseQueryResult } from '../bin/index.js';
 
 import {
   TimestreamQueryClient,
@@ -29,7 +29,7 @@ const getLastBySerialNumber = async (serialNumber) => {
     };
     const command = new QueryCommand(input);
     let queryResult = await client.send(command);
-    res = parseRow(queryResult.ColumnInfo, queryResult.Rows[0].Data);
+    res = parseQueryResult(queryResult);
   } catch (error) {
     console.log(error);
   } finally {
@@ -47,8 +47,7 @@ const getLastDayData = async () => {
     };
     const command = new QueryCommand(input);
     let queryResult = await client.send(command);
-    // TODO : look queryResult payload format
-    // res = parseRow(queryResult.ColumnInfo, queryResult.Rows[0].Data);
+    res = parseQueryResult(queryResult);
   } catch (error) {
     console.log(error);
   } finally {
