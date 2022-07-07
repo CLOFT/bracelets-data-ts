@@ -7,7 +7,6 @@ import braceletsDataService from '../services/bracelets-data.js';
 // Route HTTP requests
 const router = async (event, services) => {
   const path = event.routeKey; // path
-  const method = event.queryStringParameters.method; // requested method to call
   let result = null; // return result
 
   // Switch by path
@@ -18,10 +17,13 @@ const router = async (event, services) => {
       );
       break;
     case `GET ${constants.ROUTE_KEY_BASE}`:
-      if (method != undefined) {
-        if (method == 'lastDay') {
-          console.log('Info: Retrieving last day data ...');
-          result = await braceletsDataService.getLastDayData();
+      if (event.queryStringParameters != undefined) {
+        if (event.queryStringParameters.method != undefined) {
+          const method = event.queryStringParameters.method;
+          if (method == 'lastDay') {
+            console.log('Info: Retrieving last day data ...');
+            result = await braceletsDataService.getLastDayData();
+          }
         }
       }
 
