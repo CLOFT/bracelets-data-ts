@@ -16,6 +16,17 @@ const router = async (event, services) => {
         event.pathParameters.serialNumber
       );
       break;
+    case `GET ${constants.ROUTE_KEY_BASE}`:
+      if (event.queryStringParameters != undefined) {
+        if (event.queryStringParameters.method != undefined) {
+          const method = event.queryStringParameters.method;
+          if (method == 'lastDay') {
+            console.log('Info: Retrieving last day data ...');
+            result = await braceletsDataService.getLastDayData();
+          }
+        }
+      }
+
     default:
       return {
         statusCode: 404,
