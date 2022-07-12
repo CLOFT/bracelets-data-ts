@@ -26,7 +26,13 @@ const router = async (event, services) => {
           }
         }
       }
-
+      break;
+    case `GET ${constants.ROUTE_KEY_BASE}/CurrentWeek/{serialNumber}`:
+      // TODO : implement method to get current week data
+      result = await braceletsDataService.getCurrentWeekData(
+        event.pathParameters.serialNumber
+      );
+        break;
     default:
       return {
         statusCode: 404,
